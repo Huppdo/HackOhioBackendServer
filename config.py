@@ -4,10 +4,11 @@ userHeight = 73
 #unix timestamps
 deviceStatus = {
   'headset': 0,
-  'app': 0,
   'glove': 0,
   'frontend': 0
 }
+
+HUDMode = True
 
 #in meters
 displacement = {

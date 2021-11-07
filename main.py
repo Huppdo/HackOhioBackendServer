@@ -1,10 +1,11 @@
 from flask import Flask, request
 
 import config
-
+from flask_cors import CORS
 import time
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def get_running():
@@ -17,7 +18,8 @@ def get_user():
   return {
     "username": config.username,
     "height": config.userHeight,
-    "readable_height": f"{int((config.userHeight - (config.userHeight % 12))/12)}ft, {(config.userHeight % 12)}in"
+    "readable_height": f"{int((config.userHeight - (config.userHeight % 12))/12)}ft, {(config.userHeight % 12)}in",
+    "hud_enabled": config.HUDMode
   }
 
 @app.route("/user/set/username", methods = ['POST'])
@@ -51,7 +53,12 @@ def set_device_status():
 
 @app.route("/status")
 def get_devices():
+  config.deviceStatus["frontend"] = int(time.time())
   return config.deviceStatus
+
+@app.route("/sensorData")
+def get_sensor_information():
+  return {"handAngles": config.handAngles}
 
 @app.route("/glove/set/motors", methods = ['POST'])
 def set_glove_motors():
@@ -75,12 +82,19 @@ def get_haptic_refresh():
   config.deviceStatus["glove"] = int(time.time())
   return {'rate': config.queryRate['gloves']}
 
-@app.route("/glove/updateAngle")
+@app.route("/glove/updateAngle", methods = ['POST'])
 def set_haptic_angle():
+  data = request.get_json(force=True)
+  config.handAngles['pitch'] = data['pitch'] * 180 / 3.1415
+  config.handAngles['roll'] = data['roll'] * 180 / 3.1415
   return {"success": True}
 
-@app.route("/glove/movement")
-def set_haptic_angle():
+@app.route("/glove/movement", methods = ['POST'])
+def receive_haptic_movement():
+  data = request.get_json(force=True)
+  print(data)
+  if data["move"] == "x":
+    config.HUDMode = not config.HUDMode
   return {"success": True}
 
 if __name__ == "__main__":
