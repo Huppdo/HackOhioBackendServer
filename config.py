@@ -10,6 +10,11 @@ deviceStatus = {
 
 HUDMode = True
 
+sims = {
+  'pole': False,
+  'ball': False
+}
+
 #in meters
 displacement = {
   'x': 0,
@@ -37,7 +42,8 @@ fingerStates = {
 
 #integers (ms)
 queryRate = {
-  'gloves': 2000
+  'gloves': 2000,
+  'headset': 500
 }
 
 #booleans

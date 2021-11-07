@@ -97,10 +97,27 @@ def receive_haptic_movement():
     config.HUDMode = not config.HUDMode
   return {"success": True}
 
+@app.route("/glasses/refreshrate")
+def get_glasses_refresh():
+  config.deviceStatus["headset"] = int(time.time())
+  return {'rate': config.queryRate['headset']}
+
 @app.route("/glasses")
 def get_glasses_state():
-  #AAAA FIGURE OUT WHAT YOU WANNA DO HERE
-  return {'motors': config.motorStatuses}
+  config.deviceStatus["headset"] = int(time.time())
+  returnDict = {"left": {
+    "text": [],
+    "rect": [],
+    "circ": []
+  }, "right": {
+    "text": [],
+    "rect": [],
+    "circ": []
+  }}
+  if config.HUDMode:
+    returnDict["left"]["text"].append([0, 12, config.username])
+    returnDict["left"]["text"].append([0, 50, ":D"])
+  return returnDict
 
 @app.route("/glasses/updateAngle", methods = ['POST'])
 def set_glasses_angle():
