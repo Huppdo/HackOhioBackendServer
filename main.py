@@ -58,7 +58,7 @@ def get_devices():
 
 @app.route("/sensorData")
 def get_sensor_information():
-  return {"handAngles": config.handAngles}
+  return {"handAngles": config.handAngles, "headAngles": config.headAngles}
 
 @app.route("/glove/set/motors", methods = ['POST'])
 def set_glove_motors():
@@ -95,6 +95,18 @@ def receive_haptic_movement():
   print(data)
   if data["move"] == "x":
     config.HUDMode = not config.HUDMode
+  return {"success": True}
+
+@app.route("/glasses")
+def get_glasses_state():
+  #AAAA FIGURE OUT WHAT YOU WANNA DO HERE
+  return {'motors': config.motorStatuses}
+
+@app.route("/glasses/updateAngle", methods = ['POST'])
+def set_glasses_angle():
+  data = request.get_json(force=True)
+  config.headAngles['yaw'] = data['yaw'] * 180 / 3.1415
+  config.headAngles['roll'] = data['roll'] * 180 / 3.1415
   return {"success": True}
 
 if __name__ == "__main__":
