@@ -20,7 +20,22 @@ def get_user():
 
 @app.route("/user/set/username", methods = ['POST'])
 def set_username():
-  config.username = request.form['username']
+  data = request.get_json(force=True)
+  try:
+    config.username = data["username"]
+  except:
+    return {"success": False}
+  return {"success": True}
+
+@app.route("/user/set/height", methods = ['POST'])
+def set_height():
+  data = request.get_json(force=True)
+  try:
+    config.userHeight = data["height"]
+  except:
+    return {"success": False}
+  return {"success": True}
+
 
 if __name__ == "__main__":
     app.run()
