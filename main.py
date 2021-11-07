@@ -2,6 +2,8 @@ from flask import Flask, request
 
 import config
 
+import time
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -60,11 +62,26 @@ def set_glove_motors():
     config.motorStatuses[data['point']] = data['state']
   except Exception as e:
     return {"success": False, 'error': str(e)}
+  config.deviceStatus["glove"] = int(time.time())
   return {"success": True}
 
 @app.route("/glove")
 def get_haptic_states():
+  config.deviceStatus["glove"] = int(time.time())
   return {'motors': config.motorStatuses}
 
+@app.route("/glove/refreshrate")
+def get_haptic_refresh():
+  config.deviceStatus["glove"] = int(time.time())
+  return {'rate': config.queryRate['gloves']}
+
+@app.route("/glove/updateAngle")
+def set_haptic_angle():
+  return {"success": True}
+
+@app.route("/glove/movement")
+def set_haptic_angle():
+  return {"success": True}
+
 if __name__ == "__main__":
-    app.run()
+    app.run(host="192.168.0.100")

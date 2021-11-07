@@ -1,12 +1,12 @@
 username = "Admin"
 userHeight = 73
 
-#booleans
+#unix timestamps
 deviceStatus = {
-  'headset': False,
-  'app': False,
-  'glove': False,
-  'frontend': False
+  'headset': 0,
+  'app': 0,
+  'glove': 0,
+  'frontend': 0
 }
 
 #in meters
@@ -36,8 +36,8 @@ fingerStates = {
 
 #integers (ms)
 queryRate = {
-  'gloves': 200
+  'gloves': 2000
 }
 
 #booleans
-motorStatuses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+motorStatuses = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
