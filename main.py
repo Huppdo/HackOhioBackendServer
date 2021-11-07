@@ -36,6 +36,21 @@ def set_height():
     return {"success": False}
   return {"success": True}
 
+@app.route("/status/set", methods = ['POST'])
+def set_device_status():
+  data = request.get_json(force=True)
+  try:
+    if data['device'] not in config.deviceStatus:
+      raise Exception("Not a valid device!")
+    config.deviceStatus[data['device']] = data['state']
+  except Exception as e:
+    return {"success": False, 'error': str(e)}
+  return {"success": True}
+
+@app.route("/status")
+def get_devices():
+  return config.deviceStatus
+
 
 if __name__ == "__main__":
     app.run()
