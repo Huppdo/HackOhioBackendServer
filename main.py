@@ -51,6 +51,20 @@ def set_device_status():
 def get_devices():
   return config.deviceStatus
 
+@app.route("/glove/set/motors", methods = ['POST'])
+def set_glove_motors():
+  data = request.get_json(force=True)
+  try:
+    if data['point'] > 12 or data['point'] < 0:
+      raise Exception("Not a valid point to toggle!")
+    config.motorStatuses[data['point']] = data['state']
+  except Exception as e:
+    return {"success": False, 'error': str(e)}
+  return {"success": True}
+
+@app.route("/glove")
+def get_haptic_states():
+  return {'motors': config.motorStatuses}
 
 if __name__ == "__main__":
     app.run()

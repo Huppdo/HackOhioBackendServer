@@ -33,3 +33,11 @@ fingerStates = {
   "pointer": False,
   "ring": False
 }
+
+#integers (ms)
+queryRate = {
+  'gloves': 200
+}
+
+#booleans
+motorStatuses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
