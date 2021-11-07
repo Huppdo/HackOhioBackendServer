@@ -10,8 +10,6 @@ deviceStatus = {
 
 HUDMode = True
 
-holdEnabled = False
-
 #in meters
 displacement = {
   'x': 0,
@@ -33,7 +31,7 @@ handAngles = {
 #booleans
 fingerStates = {
   "thumb": False,
-  "pointer": False,+
+  "pointer": False,
   "ring": False
 }
 

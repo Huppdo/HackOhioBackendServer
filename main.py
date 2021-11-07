@@ -116,9 +116,11 @@ def get_glasses_state():
   }}
   if config.HUDMode:
     returnDict["left"]["text"].append([0, 12, config.username])
-    returnDict["left"]["text"].append([0, 50, ":D"])
-    returnDict["right"]["text"].append([0, 12, config.username])
-    returnDict["right"]["rect"].append([40, 40, 20, 30])
+    returnDict["left"]["text"].append([0, 40, f"Heading: {config.headAngles['yaw'] : .2f}"])
+    returnDict["left"]["text"].append([0, 70, ":D"])
+    if config.motorStatuses.count(1) > 0:
+     returnDict["right"]["text"].append([0, 12, "Ball in haptic glove"])
+     returnDict["right"]["rect"].append([0, 40, 20, 20])
   return returnDict
 
 @app.route("/glasses/updateAngle", methods = ['POST'])
@@ -126,6 +128,14 @@ def set_glasses_angle():
   data = request.get_json(force=True)
   config.headAngles['yaw'] = data['yaw'] * 180 / 3.1415
   config.headAngles['roll'] = data['roll'] * 180 / 3.1415
+  return {"success": True}
+
+@app.route("/glove/setBallCount", methods = ['POST'])
+def set_ball_count():
+  data = request.get_json(force=True)
+  config.motorStatuses = [0,0,0,0,0,0,0,0]
+  for i in range(data["count"]):
+    config.motorStatuses[i] = 1
   return {"success": True}
 
 if __name__ == "__main__":
