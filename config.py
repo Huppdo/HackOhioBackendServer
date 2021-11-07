@@ -10,10 +10,7 @@ deviceStatus = {
 
 HUDMode = True
 
-sims = {
-  'pole': False,
-  'ball': False
-}
+holdEnabled = False
 
 #in meters
 displacement = {
@@ -36,7 +33,7 @@ handAngles = {
 #booleans
 fingerStates = {
   "thumb": False,
-  "pointer": False,
+  "pointer": False,+
   "ring": False
 }
 
@@ -47,4 +44,4 @@ queryRate = {
 }
 
 #booleans
-motorStatuses = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+motorStatuses = [0,0,0,0,0,0,0,0]

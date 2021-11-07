@@ -118,7 +118,6 @@ def get_glasses_state():
     returnDict["left"]["text"].append([0, 12, config.username])
     returnDict["left"]["text"].append([0, 50, ":D"])
     returnDict["right"]["text"].append([0, 12, config.username])
-
     returnDict["right"]["rect"].append([40, 40, 20, 30])
   return returnDict
 
